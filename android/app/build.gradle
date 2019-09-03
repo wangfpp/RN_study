@@ -1,7 +1,7 @@
 apply plugin: "com.android.application"
 
 import com.android.build.OutputFile
-
+import groovy.json.JsonSlurper
 /**
  * The react.gradle file registers a task for each build variant (e.g. bundleDebugJsAndAssets
  * and bundleReleaseJsAndAssets).
@@ -87,6 +87,16 @@ apply from: "../../node_modules/react-native-vector-icons/fonts.gradle"
  * Upload all the APKs to the Play Store and people will download
  * the correct one based on the CPU architecture of their device.
  */
+def getVersion() {
+    File packageFile = new File('../package.json')
+    def jsonSlurper = new JsonSlurper()
+    def packageJson = jsonSlurper.parseText(packageFile.text)
+    return packageJson["version"]
+}
+
+def appVersion = getVersion();
+// println appVersion
+
 def enableSeparateBuildPerCPUArchitecture = false
 
 /**
@@ -107,7 +117,7 @@ android {
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
-        versionName "1.0.0"
+        versionName appVersion
     }
     signingConfigs {
         release {
