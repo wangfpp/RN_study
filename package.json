@@ -1,5 +1,5 @@
 {
-  "name": "AwesomeProject",
+  "name": "awesomeproject",
   "version": "1.0.2",
   "private": true,
   "scripts": {
@@ -43,5 +43,21 @@
   },
   "jest": {
     "preset": "react-native"
-  }
+  },
+  "description": "- React-native-navigation",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wangfpp/RN_study.git"
+  },
+  "keywords": [
+    "学习RN",
+    "语音识别"
+  ],
+  "author": "wangfpp",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/wangfpp/RN_study/issues"
+  },
+  "homepage": "https://github.com/wangfpp/RN_study#readme"
 }
