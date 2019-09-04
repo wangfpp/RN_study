@@ -71,14 +71,13 @@ export default connect(state => {
             <View style={styles.conatiner}>
                     <View style={styles.inputcontent}>
                         <TextInput 
-                        keyboardType="default"
                         placeholder="请输入WS的ip"
                         value={this.state.ip}
                         returnKeyLabel="确定"
                         onSubmitEditing={ this.changeStoreIP.bind(this) }
                         onChangeText={this.changeip.bind(this)}
-                        style={{ borderColor: 'gray', borderWidth: 0, flex: 1}} />
-                        <Ionicons name={this.state.icon.name} color={this.state.icon.color} size={28}></Ionicons>
+                         />
+                        <Ionicons name={this.state.icon.name} color={this.state.icon.color} size={26}></Ionicons>
                     </View>
                     <Text>MAC地址: {this.state.mac}</Text>
                     <Text>手机号:  {this.state.phoneNumber}</Text>
@@ -92,9 +91,10 @@ const styles = StyleSheet.create({
         flex:1,
     },
     inputcontent: {
-        margin: 5,
+        margin: 50,
         height: 40,
         flexDirection: "row",
+        justifyContent: "space-between",
         alignItems: "center",
         borderColor: '#000',
         borderWidth: 1,
