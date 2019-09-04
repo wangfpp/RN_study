@@ -14,6 +14,7 @@ import myScroll from '../view/scrollview'
 import back from '../asset/image/back.png';
 import RNUpdate from "react-native-update-app";
 import { testServe } from '../api/test';
+// import console = require("console");
 
 
 // const Realm = require('realm');
@@ -158,6 +159,7 @@ export default class Route extends Component {
         // 在这里可以发请求，用promise返回结果
         // let res = await toolApi.updateApp() 
         let res = await testServe.updateApp();
+        console.log(res);
         return res;
         // return res.data
         /*返回结果 res 如下
