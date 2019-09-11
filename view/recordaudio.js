@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, Button, Text,　Alert, AppState, ToastAndroid, ScrollView} from 'react-native';
+import { StyleSheet, View, Button, Text,Alert, AppState, ToastAndroid, ScrollView} from 'react-native';
 import { Buffer } from 'buffer';
 import { connect } from 'react-redux';
 import Permissions from 'react-native-permissions';
@@ -39,7 +39,7 @@ export default connect(state => {
   }
   sound = null;
   ws = null;
-  limit =  50;
+  limit =  100000000;
   componentWillMount() {
     this.initWS();
     AppState.addEventListener('change', this.handleAppStateChange);
@@ -92,6 +92,7 @@ export default connect(state => {
     //   let strchunk = JSON.stringify(chunk);
     //   console.log(data, chunk);
       if (this.ws && this.state.socketSuccess) {
+          // console.log(data);
           this.ws.send(data);
       }
       // do something with audio chunk
@@ -111,14 +112,11 @@ export default connect(state => {
       _self.setState({
         socketSuccess: false
       });
-      Alert.alert(
-        '错误提示',
-        'Websocket链接错误',
-        [
-          {text: 'OK', onPress: () => console.log('OK Pressed')},
-        ],
-        { cancelable: false }
-      )
+      ToastAndroid.showWithGravity(
+            "Websocket链接错误",
+            ToastAndroid.SHORT,
+            ToastAndroid.CENTER
+        );
     }
     this.ws.onmessage = function(msg) {
       let wsdata = JSON.parse(msg.data);
@@ -218,6 +216,15 @@ export default connect(state => {
           this.ws.onclose ();
       }
   }
+  cleartext() {
+      this.setState({
+          recResultTextList: []
+      })
+  }
+  contentresize() {
+      console.log(111)
+      this.myscrollView.scrollToEnd({animated: true})
+  }
   render() {
     const { recording, paused, audioFile } = this.state;
     return (
@@ -225,7 +232,9 @@ export default connect(state => {
         <View style={styles.flexhone}>
             <Text>当前WS链接:{this.props.siteIP}</Text>
           <Text>识别结果: </Text>
-          <ScrollView>
+          <ScrollView
+          ref={(view) => {this.myscrollView = view}} 
+            onContentSizeChange={this.contentresize.bind(this)}>
             { this.state.recResultTextList.map((item, index) => {
                 return (
                 <Text style={styles.textstyle} key={item.timestamp}>{item.text}</Text> 
@@ -264,6 +273,9 @@ export default connect(state => {
           </ActionButton.Item>
           <ActionButton.Item buttonColor='#3498db' title="断开" onPress={this.closews.bind(this)}>
             <Icon name="chain-broken" size={24}  style={styles.actionButtonIcon} />
+          </ActionButton.Item>
+          <ActionButton.Item buttonColor='tomato' title="清屏" onPress={this.cleartext.bind(this)}>
+            <Icon name="trash-o" size={26}  style={styles.actionButtonIcon} />
           </ActionButton.Item>
         </ActionButton>
       </View>
