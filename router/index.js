@@ -2,7 +2,9 @@ import { createStackNavigator, createAppContainer, createBottomTabNavigator } fr
 import React, { Component } from 'react';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { Image, View, Text, Button } from 'react-native';
-import Store from '../store/index';
+import configureStore from '../store/index';
+import { PersistGate } from 'redux-persist/integration/react';
+
 import { Provider } from 'react-redux';
 import Home from '../App';
 import Blink from '../view/blink';
@@ -16,7 +18,7 @@ import RNUpdate from "react-native-update-app";
 import { testServe } from '../api/test';
 // import console = require("console");
 
-
+const { store, persistor } = configureStore();
 // const Realm = require('realm');
 
 // const IpSchema = {
@@ -177,15 +179,17 @@ export default class Route extends Component {
     // realm = Realm;
     render() {
         return (
-            <Provider store={Store}>
-                <StoreRouter />
-                <RNUpdate
-                    onBeforeStart={this.onBeforeStart.bind(this)}
-                    progressBarColor="#f50"
-                    updateBoxWidth={260}      // 选填，升级框的宽度
-                    updateBoxHeight={250}      // 选填，升级框的高度
-                    updateBtnHeight={38}       // 选填，升级按钮的高度  // 选填，换升级弹框图片
-                />
+            <Provider store={store} >
+                <PersistGate loading={null} persistor={persistor}>
+                    <StoreRouter />
+                    <RNUpdate
+                        onBeforeStart={this.onBeforeStart.bind(this)}
+                        progressBarColor="#f50"
+                        updateBoxWidth={260}      // 选填，升级框的宽度
+                        updateBoxHeight={250}      // 选填，升级框的高度
+                        updateBtnHeight={38}       // 选填，升级按钮的高度  // 选填，换升级弹框图片
+                    />
+                </PersistGate>
             </Provider>
         )
     }

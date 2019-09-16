@@ -1,4 +1,4 @@
-import { combineReducers} from 'redux';
+
 
 const setipreducer = (state = {ip: '172.16.1.237:8887'}, action) => {
     switch (action.type) {
@@ -9,6 +9,4 @@ const setipreducer = (state = {ip: '172.16.1.237:8887'}, action) => {
     }
 };
 
-export default combineReducers({
-    setipreducer
-});
+export default setipreducer;
