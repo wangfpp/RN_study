@@ -9,6 +9,7 @@ import AudioRecord from 'react-native-audio-record';
 import Icon from 'react-native-vector-icons/FontAwesome';
 // import realm from '../database/index';
 import ActionButton from 'react-native-circular-action-menu';
+import DeviceInfo from 'react-native-device-info';
 
 
 
@@ -29,7 +30,8 @@ export default connect(state => {
       loaded: false,
       paused: true,
       recResultTextList: [],
-      socketSuccess: false
+      socketSuccess: false,
+      version: ''
     };
     // let resu = realm.objects('IP');
     // resu.forEach(ip => {
@@ -61,13 +63,14 @@ export default connect(state => {
   //   return  false;
   // };
   //状态改变响应
-  handleAppStateChange(appState) {
+  handleAppStateChange = (appState) => {
       // alert('当前状态为:'+appState);
     //   console.log(111, appState);
     //   console.log(this);
-    //   if (appState == 'background') {
-    //       this.stop();
-    //   }
+      if (appState == 'background') {
+          console.log('background');
+          this.stop();
+      }
   };
   componentWillReceiveProps(nextProps) {
         if (nextProps.siteIP !== this.state.siteIP) {
@@ -79,6 +82,10 @@ export default connect(state => {
         }
   }
   async componentDidMount() {
+    let version =  await DeviceInfo.getVersion();
+    this.setState({
+        version: version
+    })
     await this.checkPermission();
     const options = {
       sampleRate: 16000,
@@ -222,7 +229,6 @@ export default connect(state => {
       })
   }
   contentresize() {
-      console.log(111)
       this.myscrollView.scrollToEnd({animated: true})
   }
   render() {
@@ -245,12 +251,14 @@ export default connect(state => {
         <View style={styles.row}>
           <Button onPress={this.start}  title="录音" disabled={recording} />
           <Button onPress={this.stop} title="停止" disabled={!recording} />
+          
           {/* {paused ? (
             <Button onPress={this.play} title="回放" disabled={!audioFile} />
           ) : (
             <Button onPress={this.pause} title="暂停" disabled={!audioFile} />
           )} */}
         </View>
+        <Text style={{textAlign: "center",fontSize: 16}}>V{this.state.version}</Text>
         {/* <ActionButton
           buttonColor="rgba(231,76,60,1)"
           position="right"
