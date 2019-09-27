@@ -11,8 +11,9 @@ const testServe = {
         });
     },
     updateApp: _ => {
+        let time = new Date().getTime();
         return new Promise((resolve, reject) => {
-            axios.get(`http://172.16.1.61:2081/html/app/shiyin/version.json`).then(res => {
+            axios.get(`http://172.16.1.61:2081/html/app/shiyin/version.json?time=${time}`).then(res => {
                 resolve(res.data);
             }).catch(err => {
                 reject(err);
