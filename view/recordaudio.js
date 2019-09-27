@@ -37,7 +37,7 @@ export default connect(state => {
     // resu.forEach(ip => {
     //   this.state.WSurl = ip.address;
     // });
-    console.log(this);
+    // console.log(this);
   }
   sound = null;
   ws = null;
@@ -239,11 +239,12 @@ export default connect(state => {
             <Text>当前WS链接:{this.props.siteIP}</Text>
           <Text>识别结果: </Text>
           <ScrollView
+        //   contentContainerStyle={styles.contentContainer}
           ref={(view) => {this.myscrollView = view}} 
             onContentSizeChange={this.contentresize.bind(this)}>
             { this.state.recResultTextList.map((item, index) => {
                 return (
-                <Text style={styles.textstyle} key={item.timestamp}>{item.text}</Text> 
+                    <Text style={styles.textstyle} key={item.timestamp}>{item.text}</Text> 
                 );
             })}
           </ScrollView>
@@ -293,10 +294,12 @@ export default connect(state => {
 
 const styles = StyleSheet.create({
   textstyle: {
-    margin: 8,
-    color: '#f00',
-    fontWeight: '900'
-  },  
+    fontWeight: '900',
+    color: 'tomato',
+    fontSize: 14,
+    lineHeight: 18,
+    marginBottom: 15
+  }, 
   container: {
     flex: 1,
     justifyContent: "space-around",
