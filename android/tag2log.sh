@@ -60,7 +60,7 @@ if [ $currTag ];then
 else 
     commitList $lastTag "bugfix"
 fi
-
+cp commits.md  ../CHANGEDLOG.md
 
 
 # echo  "$commits" >> commits.md
