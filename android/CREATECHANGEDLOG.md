@@ -5,6 +5,7 @@
 - 2. changedlog就来源于每次的commit
 - 3. git log可一获取所有的commit
 - 4. changedlog应该是上次发布与本次发布之间的commit生成
+- 5. 按照提交规范过滤提交特性得到升级说明
 
 ### 如何知晓上次发布?
 - 1. 构建tag名称
@@ -68,6 +69,15 @@
 
 - 4. 有了规范的commit就可以提取各种特性修改 
 
+### 如何保存CHANGEDLOG
+- 1. 以上步骤就可以获取不同属性的版本修改了
+- 2. 只需要一文档的方式保存就行
+```bash
+    # 获取过滤并格式化的commit
+    commits=$(git log $1..$2 --date=short --pretty=format:" - %s %b  提交人及邮箱 %an－%ae commitID: %h 日期:%ad" --grep=^$3)
+    # 输入进文档内 > 是直接覆盖 >> 是追加
+    echo  "$commits" >> commits.md
+```
 ### 脚本构建
 
 - 1. 打包、构建changedlog以及其他操作都应该是自动化的
@@ -77,3 +87,9 @@
 - 1. .sh的文件需要sudo chmod +x name.sh赋给可执行权限
 - 2. 根据自己的需求构建所需的脚本文件
 - 3. 有的东西windows上可能不能用比如jq 可以试试[巧克力](https://chocolatey.org/)安装
+- 4. 本文的release.sh地址[release.sh](https://github.com/wangfpp/RN_study/blob/master/android/release.sh)<br>
+[changedlog脚本](https://github.com/wangfpp/RN_study/blob/master/android/tag2log.sh)
+- 5. 运行结果
+
+![提交说明](https://graph.baidu.com/resource/11134907d3afd19ce49a101571296735.jpg "提交commit")
+![生成结果](https://graph.baidu.com/resource/1118fa702edb0f1c00b9d01571298027.jpg "提取的commit")
