@@ -6,7 +6,7 @@
 
 
 #采用已有的打包脚本进行打包
-./buildapp.sh $1
+# ./buildapp.sh $1
 
 #更新文件的URL
 UPDATEURL="http://172.16.1.61:2081/html/app/shiyin/"
@@ -33,9 +33,9 @@ if [ $appName ]; then
 
     # 掐头去尾截取的长度
     truelen=$(expr $strlen - 11)
-
+    BRANCH=$(git branch | grep '*' | awk '{print $2}')
     # 截取字符串
-    TAGNAME=$(echo ${appName:  7 : $truelen })
+    TAGNAME=$(echo $BRANCH-${appName:  7 : $truelen })
     echo $TAGNAME
     ./tag2log.sh $TAGNAME
 else
